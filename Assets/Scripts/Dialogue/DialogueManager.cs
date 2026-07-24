@@ -1,16 +1,20 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
+using System.Collections.Generic;
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
+    public bool IsDialogueActive => isDialogueActive;
 
     [Header("UI")]
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private Image portraitImage;
     [SerializeField] private TMP_Text speakerNameText;
     [SerializeField] private TMP_Text dialogueText;
+    private Queue<string> dialogueLines = new Queue<string>();
+    private Dialogue currentDialogue;
+    private bool isDialogueActive = false;
 
     private void Awake()
     {
@@ -27,16 +31,51 @@ public class DialogueManager : MonoBehaviour
     {
         dialoguePanel.SetActive(false);
     }
-    private void Update()
+    public void StartDialogue(Dialogue dialogue)
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        currentDialogue = dialogue;
+        isDialogueActive = true;
+
+        dialoguePanel.SetActive(true);
+
+        speakerNameText.text = dialogue.speakerName;
+        portraitImage.sprite = dialogue.portrait;
+
+        dialogueLines.Clear();
+
+        foreach (string line in dialogue.lines)
         {
-            OpenDialogue();
+            dialogueLines.Enqueue(line);
         }
 
-        if (Input.GetKeyDown(KeyCode.G))
+        DisplayNextLine();
+    }
+    public void DisplayNextLine()
+    {
+        if (dialogueLines.Count == 0)
         {
-            CloseDialogue();
+            EndDialogue();
+            return;
+        }
+
+        dialogueText.text = dialogueLines.Dequeue();
+    }
+    private void EndDialogue()
+    {
+        isDialogueActive = false;
+
+        dialoguePanel.SetActive(false);
+
+        currentDialogue = null;
+    }
+    private void Update()
+    {
+        if (!isDialogueActive)
+            return;
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            DisplayNextLine();
         }
     }
 }
