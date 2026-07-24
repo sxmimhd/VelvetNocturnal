@@ -23,11 +23,11 @@ public class DialogueTrigger : MonoBehaviour
         if (autoInteract)
             return;
 
-        Debug.Log($"Show Prompt: {promptText}");
+        UIManager.Instance.ShowPrompt(promptText);
     }
 
     public void HidePrompt()
     {
-        Debug.Log("Hide Prompt");
+        UIManager.Instance.HidePrompt();
     }
 }
