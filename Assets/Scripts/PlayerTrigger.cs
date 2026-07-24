@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
 {
-    private DialogueTrigger currentTrigger;
+    private InteractionTrigger currentTrigger;
 
     private void Update()
     {
@@ -22,7 +22,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        DialogueTrigger trigger = other.GetComponent<DialogueTrigger>();
+        InteractionTrigger trigger = other.GetComponent<InteractionTrigger>();
 
         if (trigger != null)
         {
@@ -40,7 +40,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        DialogueTrigger trigger = other.GetComponent<DialogueTrigger>();
+        InteractionTrigger trigger = other.GetComponent<InteractionTrigger>();
 
         if (trigger != null && trigger == currentTrigger)
         {
