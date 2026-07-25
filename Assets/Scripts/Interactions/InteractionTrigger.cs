@@ -35,7 +35,15 @@ public class InteractionTrigger : MonoBehaviour
                 break;
 
             case InteractionType.Scene:
+
+                Debug.Log(SceneTransitionManager.Instance == null
+                    ? "SceneTransitionManager IS NULL"
+                    : "SceneTransitionManager EXISTS");
+                Debug.Log("Scene Name: " + sceneName);
+                Debug.Log("Spawn ID: " + spawnID);
+
                 SceneTransitionManager.Instance.LoadScene(sceneName, spawnID);
+
                 break;
 
             case InteractionType.Pickup:
