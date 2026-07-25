@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bc7e21d279e2794da532ab820f58e27, type: 3}
   m_Name: exit
   m_EditorClassIdentifier: Assembly-CSharp::Dialogue
-  speakerName: 
-  portrait: {fileID: 0}
-  lines: []
+  speakerName: Lumy
+  portrait: {fileID: -6028344193123754203, guid: 3eccbad8c3f48a34293959d573c085dc, type: 3}
+  lines:
+  - i cant leave yet ...
+  - i cant leave yet ...

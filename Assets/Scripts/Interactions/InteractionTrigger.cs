@@ -18,6 +18,7 @@ public class InteractionTrigger : MonoBehaviour
 
     [Header("Scene")]
     [SerializeField] private string sceneName;
+    [SerializeField] private string spawnID = "Default";
 
     public bool AutoInteract => autoInteract;
     public void Interact()
@@ -34,7 +35,7 @@ public class InteractionTrigger : MonoBehaviour
                 break;
 
             case InteractionType.Scene:
-                Debug.Log("Load Scene: " + sceneName);
+                SceneTransitionManager.Instance.LoadScene(sceneName, spawnID);
                 break;
 
             case InteractionType.Pickup:
