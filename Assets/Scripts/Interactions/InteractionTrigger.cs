@@ -38,9 +38,7 @@ public class InteractionTrigger : MonoBehaviour
 
     private IEnumerator InteractionRoutine()
     {
-        // -----------------------------
-        // Dialogues
-        // -----------------------------
+        
         if (useDialogue && dialogues.Length > 0)
         {
             foreach (Dialogue dialogue in dialogues)
@@ -62,19 +60,14 @@ public class InteractionTrigger : MonoBehaviour
             }
         }
 
-        // -----------------------------
-        // Pickup (future)
-        // -----------------------------
+    
         if (usePickup)
         {
             Debug.Log("Picked up: " + itemID);
 
-            // InventoryManager.Instance.Add(itemID);
+            
         }
 
-        // -----------------------------
-        // Scene Transition
-        // -----------------------------
         if (useSceneTransition)
         {
             SceneTransitionManager.Instance.LoadScene(

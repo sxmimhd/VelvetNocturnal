@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 public class SceneTransitionManager : MonoBehaviour
 {
     public static SceneTransitionManager Instance;
-
+    private bool sceneLoaded;
+    private float currentFadeDuration;
     private string nextSpawnID;
 
     private void Awake()
@@ -20,27 +21,42 @@ public class SceneTransitionManager : MonoBehaviour
     public void LoadScene(string sceneName, string spawnID, float fadeDuration)
     {
         nextSpawnID = spawnID;
+        currentFadeDuration = fadeDuration;
 
-        StartCoroutine(LoadSceneRoutine(sceneName, fadeDuration));
+        sceneLoaded = false;
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+        StartCoroutine(LoadSceneRoutine(sceneName));
     }
 
-    private IEnumerator LoadSceneRoutine(string sceneName, float fadeDuration)
+    private IEnumerator LoadSceneRoutine(string sceneName)
     {
-        FadeManager.Instance.SetFadeDuration(fadeDuration);
+        FadeManager.Instance.SetFadeDuration(currentFadeDuration);
 
         yield return FadeManager.Instance.FadeOut();
 
+        FadeManager.Instance.SetBlack();
+
         SceneManager.LoadScene(sceneName);
 
-        yield return null;
+        yield return new WaitUntil(() => sceneLoaded);
+
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(0.2f);
+
+        yield return FadeManager.Instance.FadeIn();
+    }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
 
         SpawnPlayer();
 
         UpdateCameraBounds();
 
-        yield return FadeManager.Instance.FadeIn();
+        sceneLoaded = true;
     }
-
     private void SpawnPlayer()
     {
         SceneSpawn[] spawns = FindObjectsByType<SceneSpawn>();
