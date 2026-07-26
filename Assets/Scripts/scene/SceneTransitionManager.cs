@@ -1,7 +1,7 @@
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using System.Collections;
 public class SceneTransitionManager : MonoBehaviour
 {
     public static SceneTransitionManager Instance;
@@ -30,7 +30,17 @@ public class SceneTransitionManager : MonoBehaviour
 
         SceneManager.sceneLoaded += OnSceneLoaded;
 
+        StartCoroutine(LoadSceneRoutine(sceneName));
+    }
+    private IEnumerator LoadSceneRoutine(string sceneName)
+    {
+        yield return FadeManager.Instance.FadeOut();
+
         SceneManager.LoadScene(sceneName);
+
+        yield return null;
+
+        yield return FadeManager.Instance.FadeIn();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)

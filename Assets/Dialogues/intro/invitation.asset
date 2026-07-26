@@ -15,10 +15,16 @@ MonoBehaviour:
   speakerName: Lumy
   portrait: {fileID: -6028344193123754203, guid: 3eccbad8c3f48a34293959d573c085dc, type: 3}
   lines:
-  - An envelope?
-  - It's addressed to me...
+  - ...Hm? The envelope...
+  - This is the address... I guess I really came all this way.
   - '"To Miss Lumy."'
-  - '"You are cordially invited..."'
-  - '"...to the Velvet Nocturnal Tea Party."'
-  - No sender...
-  - Who would leave something like this here?
+  - '"If this letter has found you, then the mansion has already chosen its guest."'
+  - '"There are truths buried within these walls that concern your family."'
+  - '"Arrive before midnight."'
+  - '"Once the gates close, they will not open again until the debt has been settled."'
+  - '"We await your arrival."'
+  - '"Sender: The House of Nocturnal."'
+  - ...My family?
+  - I've never heard of a place called Nocturnal...
+  - If this is someone's idea of a joke... they went through a lot of trouble.
+  - ...There's only one way to find out.
