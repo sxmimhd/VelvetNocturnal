@@ -1,7 +1,8 @@
+using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections;
+
 public class SceneTransitionManager : MonoBehaviour
 {
     public static SceneTransitionManager Instance;
@@ -10,62 +11,44 @@ public class SceneTransitionManager : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("SceneTransitionManager Awake on " + gameObject.name);
-
         if (Instance == null)
-        {
             Instance = this;
-            Debug.Log("Instance assigned.");
-        }
         else
-        {
-            Debug.Log("Duplicate destroyed.");
             Destroy(gameObject);
-        }
     }
 
-    public void LoadScene(string sceneName, string spawnID)
+    public void LoadScene(string sceneName, string spawnID, float fadeDuration)
     {
         nextSpawnID = spawnID;
 
-        SceneManager.sceneLoaded += OnSceneLoaded;
-
-        StartCoroutine(LoadSceneRoutine(sceneName));
+        StartCoroutine(LoadSceneRoutine(sceneName, fadeDuration));
     }
-    private IEnumerator LoadSceneRoutine(string sceneName)
+
+    private IEnumerator LoadSceneRoutine(string sceneName, float fadeDuration)
     {
+        FadeManager.Instance.SetFadeDuration(fadeDuration);
+
         yield return FadeManager.Instance.FadeOut();
 
         SceneManager.LoadScene(sceneName);
 
         yield return null;
 
-        yield return FadeManager.Instance.FadeIn();
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-
         SpawnPlayer();
+
         UpdateCameraBounds();
+
+        yield return FadeManager.Instance.FadeIn();
     }
 
     private void SpawnPlayer()
     {
         SceneSpawn[] spawns = FindObjectsByType<SceneSpawn>();
 
-        Debug.Log($"Found {spawns.Length} SceneSpawn objects.");
-
         foreach (SceneSpawn spawn in spawns)
         {
-            Debug.Log($"Spawn Object: {spawn.gameObject.name}");
-            Debug.Log($"Spawn ID: {spawn.SpawnID}");
-
             if (spawn.SpawnID == nextSpawnID)
             {
-                Debug.Log("Spawn Found!");
-
                 PlayerMovement.Instance.transform.position = spawn.transform.position;
                 return;
             }
@@ -73,27 +56,20 @@ public class SceneTransitionManager : MonoBehaviour
 
         Debug.LogWarning($"Spawn '{nextSpawnID}' not found.");
     }
+
     private void UpdateCameraBounds()
     {
-        Debug.Log("UpdateCameraBounds()");
         CameraBounds bounds = FindAnyObjectByType<CameraBounds>();
 
         if (bounds == null)
-        {
-            Debug.LogWarning("No CameraBounds found in this scene.");
             return;
-        }
 
         CinemachineConfiner2D confiner = FindAnyObjectByType<CinemachineConfiner2D>();
 
         if (confiner == null)
-        {
-            Debug.LogWarning("No CinemachineConfiner2D found.");
             return;
-        }
 
         confiner.BoundingShape2D = bounds.GetComponent<Collider2D>();
         confiner.InvalidateBoundingShapeCache();
     }
-    
 }

@@ -1,26 +1,31 @@
+using System.Collections;
 using UnityEngine;
 
 public class InteractionTrigger : MonoBehaviour
 {
-    [Header("Interaction")]
-    [SerializeField] private InteractionType interactionType;
-
+    [Header("General")]
     [SerializeField] private string promptText = "Interact";
-
     [SerializeField] private bool autoInteract;
-
     [SerializeField] private bool oneTimeOnly;
 
     private bool hasInteracted;
 
     [Header("Dialogue")]
-    [SerializeField] private Dialogue dialogue;
+    [SerializeField] private bool useDialogue;
+    [SerializeField] private Dialogue[] dialogues;
 
-    [Header("Scene")]
+    [Header("Pickup")]
+    [SerializeField] private bool usePickup;
+    [SerializeField] private string itemID;
+
+    [Header("Scene Transition")]
+    [SerializeField] private bool useSceneTransition;
     [SerializeField] private string sceneName;
-    [SerializeField] private string spawnID = "Default";
+    [SerializeField] private string spawnID;
+    [SerializeField] private float fadeDuration = 1f;
 
     public bool AutoInteract => autoInteract;
+
     public void Interact()
     {
         if (oneTimeOnly && hasInteracted)
@@ -28,35 +33,54 @@ public class InteractionTrigger : MonoBehaviour
 
         hasInteracted = true;
 
-        switch (interactionType)
+        StartCoroutine(InteractionRoutine());
+    }
+
+    private IEnumerator InteractionRoutine()
+    {
+        // -----------------------------
+        // Dialogues
+        // -----------------------------
+        if (useDialogue && dialogues.Length > 0)
         {
-            case InteractionType.Dialogue:
+            foreach (Dialogue dialogue in dialogues)
+            {
+                bool finished = false;
+
+                void DialogueFinished()
+                {
+                    finished = true;
+                }
+
+                DialogueManager.Instance.OnDialogueFinished += DialogueFinished;
+
                 DialogueManager.Instance.StartDialogue(dialogue);
-                break;
 
-            case InteractionType.Scene:
+                yield return new WaitUntil(() => finished);
 
-                Debug.Log(SceneTransitionManager.Instance == null
-                    ? "SceneTransitionManager IS NULL"
-                    : "SceneTransitionManager EXISTS");
-                Debug.Log("Scene Name: " + sceneName);
-                Debug.Log("Spawn ID: " + spawnID);
+                DialogueManager.Instance.OnDialogueFinished -= DialogueFinished;
+            }
+        }
 
-                SceneTransitionManager.Instance.LoadScene(sceneName, spawnID);
+        // -----------------------------
+        // Pickup (future)
+        // -----------------------------
+        if (usePickup)
+        {
+            Debug.Log("Picked up: " + itemID);
 
-                break;
+            // InventoryManager.Instance.Add(itemID);
+        }
 
-            case InteractionType.Pickup:
-                Debug.Log("Pickup");
-                break;
-
-            case InteractionType.Inspect:
-                Debug.Log("Inspect");
-                break;
-
-            case InteractionType.Custom:
-                Debug.Log("Custom");
-                break;
+        // -----------------------------
+        // Scene Transition
+        // -----------------------------
+        if (useSceneTransition)
+        {
+            SceneTransitionManager.Instance.LoadScene(
+                sceneName,
+                spawnID,
+                fadeDuration);
         }
     }
 

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 73d871bab31c3804c9c1fe1a522ab94b
+guid: d6ea89ce35df700458bf998edee48ea4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 938267370722488241
-    second: collidor01_0
+      213: -242020764082000488
+    second: sewers02_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: collidor01_0
+      name: sewers02_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1080
-        height: 1456
+        width: 1774
+        height: 887
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1bfe048d335650d00800000000000000
-      internalID: 938267370722488241
+      spriteID: 89daf98b56b24acf0800000000000000
+      internalID: -242020764082000488
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      collidor01_0: 938267370722488241
+      sewers02_0: -242020764082000488
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

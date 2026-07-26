@@ -1,20 +1,28 @@
+using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
+
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
+
     public bool IsDialogueActive => isDialogueActive;
+
+    // Fired whenever a dialogue completely finishes.
+    public event Action OnDialogueFinished;
 
     [Header("UI")]
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private Image portraitImage;
     [SerializeField] private TMP_Text speakerNameText;
     [SerializeField] private TMP_Text dialogueText;
-    private Queue<string> dialogueLines = new Queue<string>();
+
+    private readonly Queue<string> dialogueLines = new();
+
     private Dialogue currentDialogue;
-    private bool isDialogueActive = false;
+    private bool isDialogueActive;
 
     private void Awake()
     {
@@ -23,16 +31,12 @@ public class DialogueManager : MonoBehaviour
         else
             Destroy(gameObject);
     }
-    public void OpenDialogue()
-    {
-        dialoguePanel.SetActive(true);
-    }
-    public void CloseDialogue()
-    {
-        dialoguePanel.SetActive(false);
-    }
+
     public void StartDialogue(Dialogue dialogue)
     {
+        if (dialogue == null)
+            return;
+
         currentDialogue = dialogue;
         isDialogueActive = true;
 
@@ -44,12 +48,11 @@ public class DialogueManager : MonoBehaviour
         dialogueLines.Clear();
 
         foreach (string line in dialogue.lines)
-        {
             dialogueLines.Enqueue(line);
-        }
 
         DisplayNextLine();
     }
+
     public void DisplayNextLine()
     {
         if (dialogueLines.Count == 0)
@@ -60,6 +63,7 @@ public class DialogueManager : MonoBehaviour
 
         dialogueText.text = dialogueLines.Dequeue();
     }
+
     private void EndDialogue()
     {
         isDialogueActive = false;
@@ -67,15 +71,17 @@ public class DialogueManager : MonoBehaviour
         dialoguePanel.SetActive(false);
 
         currentDialogue = null;
+
+        // Notify whoever is waiting.
+        OnDialogueFinished?.Invoke();
     }
+
     private void Update()
     {
         if (!isDialogueActive)
             return;
 
         if (Input.GetKeyDown(KeyCode.E))
-        {
             DisplayNextLine();
-        }
     }
 }

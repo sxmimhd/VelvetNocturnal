@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 5b36b2b5991058c4ea968ad1a7c62260
+guid: 64cc3a38184ade34d8ebc4abd26d9df5
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2480245731887072283
-    second: dinnerroom_0
+      213: 5512816116914916291
+    second: castel_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: dinnerroom_0
+      name: castel_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1080
-        height: 1456
+        width: 931
+        height: 691
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5eb3133d5a5649dd0800000000000000
-      internalID: -2480245731887072283
+      spriteID: 3cb03c8dc05718c40800000000000000
+      internalID: 5512816116914916291
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      dinnerroom_0: -2480245731887072283
+      castel_0: 5512816116914916291
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
