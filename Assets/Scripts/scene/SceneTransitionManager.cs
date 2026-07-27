@@ -65,7 +65,7 @@ public class SceneTransitionManager : MonoBehaviour
         {
             if (spawn.SpawnID == nextSpawnID)
             {
-                PlayerMovement.Instance.transform.position = spawn.transform.position;
+                CharacterManager.Instance.CurrentCharacter.transform.position = spawn.transform.position;
                 return;
             }
         }

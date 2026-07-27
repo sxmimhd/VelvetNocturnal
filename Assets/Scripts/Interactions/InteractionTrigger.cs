@@ -9,6 +9,8 @@ public class InteractionTrigger : MonoBehaviour
     [SerializeField] private bool oneTimeOnly;
 
     private bool hasInteracted;
+    private bool isInteracting;
+    public bool IsInteracting => isInteracting;
 
     [Header("Dialogue")]
     [SerializeField] private bool useDialogue;
@@ -28,10 +30,16 @@ public class InteractionTrigger : MonoBehaviour
 
     public void Interact()
     {
+        if (isInteracting)
+            return;
+
         if (oneTimeOnly && hasInteracted)
             return;
 
         hasInteracted = true;
+        isInteracting = true;
+
+        HidePrompt();
 
         StartCoroutine(InteractionRoutine());
     }
@@ -75,11 +83,19 @@ public class InteractionTrigger : MonoBehaviour
                 spawnID,
                 fadeDuration);
         }
+        isInteracting = false;
+        
+
+        if (!oneTimeOnly)
+            ShowPrompt();
     }
 
     public void ShowPrompt()
     {
         if (autoInteract)
+            return;
+
+        if (isInteracting)
             return;
 
         UIManager.Instance.ShowPrompt(promptText);
