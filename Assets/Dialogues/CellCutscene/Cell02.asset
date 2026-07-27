@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bc7e21d279e2794da532ab820f58e27, type: 3}
   m_Name: Cell02
   m_EditorClassIdentifier: Assembly-CSharp::Dialogue
-  speakerName: Lumy
-  portrait: {fileID: -6028344193123754203, guid: 3eccbad8c3f48a34293959d573c085dc, type: 3}
+  speakerName: ???
+  portrait: {fileID: -5021344682976693696, guid: a75fea45c71ece54f97f752b5c6d2030, type: 3}
   lines:
-  - Where...
-  - Where am I...?
+  - The descendant has entered.

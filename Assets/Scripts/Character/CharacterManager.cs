@@ -7,7 +7,7 @@ public class CharacterManager : MonoBehaviour
 
     [SerializeField] private PlayerMovement lumy;
     [SerializeField] private PlayerMovement carlos;
-
+    [SerializeField] private bool carlosUnlocked;
     [SerializeField] private CinemachineCamera cinemachineCamera;
 
     public PlayerMovement CurrentCharacter { get; private set; }
@@ -25,10 +25,15 @@ public class CharacterManager : MonoBehaviour
     private void Start()
     {
         SetCurrentCharacter(lumy);
+
+        carlos.gameObject.SetActive(carlosUnlocked);
     }
 
     private void Update()
     {
+        if (!carlosUnlocked)
+            return;
+
         if (Input.GetKeyDown(KeyCode.F))
         {
             SwitchCharacter();
@@ -57,5 +62,30 @@ public class CharacterManager : MonoBehaviour
         CurrentCharacter.GetComponent<PlayerInteraction>().CanInteract = true;
 
         cinemachineCamera.Follow = CurrentCharacter.transform;
+        SpriteRenderer lumySprite = lumy.GetComponent<SpriteRenderer>();
+        SpriteRenderer carlosSprite = carlos.GetComponent<SpriteRenderer>();
+
+        if (CurrentCharacter == lumy)
+        {
+            lumySprite.sortingOrder = 2;
+            carlosSprite.sortingOrder = 1;
+        }
+        else
+        {
+            carlosSprite.sortingOrder = 2;
+            lumySprite.sortingOrder = 1;
+        }
+    }
+    public void UnlockCarlos()
+    {
+        if (carlosUnlocked)
+            return;
+
+        carlosUnlocked = true;
+
+        carlos.gameObject.SetActive(true);
+
+        carlos.transform.position =
+            lumy.transform.position + Vector3.right * 1.2f;
     }
 }

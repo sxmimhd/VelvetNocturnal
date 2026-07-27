@@ -57,17 +57,33 @@ public class SceneTransitionManager : MonoBehaviour
 
         sceneLoaded = true;
     }
+    [SerializeField] private float companionOffset = 1.2f;
+
     private void SpawnPlayer()
     {
         SceneSpawn[] spawns = FindObjectsByType<SceneSpawn>();
 
         foreach (SceneSpawn spawn in spawns)
         {
-            if (spawn.SpawnID == nextSpawnID)
+            if (spawn.SpawnID != nextSpawnID)
+                continue;
+
+            PlayerMovement active = CharacterManager.Instance.CurrentCharacter;
+
+            active.transform.position = spawn.transform.position;
+
+            PlayerMovement companion =
+                active == CharacterManager.Instance.Lumy
+                ? CharacterManager.Instance.Carlos
+                : CharacterManager.Instance.Lumy;
+
+            if (companion.gameObject.activeSelf)
             {
-                CharacterManager.Instance.CurrentCharacter.transform.position = spawn.transform.position;
-                return;
+                companion.transform.position =
+                    active.transform.position + Vector3.right * companionOffset;
             }
+
+            return;
         }
 
         Debug.LogWarning($"Spawn '{nextSpawnID}' not found.");

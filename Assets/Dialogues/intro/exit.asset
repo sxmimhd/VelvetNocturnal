@@ -15,5 +15,4 @@ MonoBehaviour:
   speakerName: Lumy
   portrait: {fileID: -6028344193123754203, guid: 3eccbad8c3f48a34293959d573c085dc, type: 3}
   lines:
-  - i cant leave yet ...
-  - ...
+  - Not yet

@@ -18,13 +18,28 @@ MonoBehaviour:
   - ...Hm? The envelope...
   - This is the address... I guess I really came all this way.
   - '"To Miss Lumy."'
-  - '"If this letter has found you, then the mansion has already chosen its guest."'
-  - '"There are truths buried within these walls that concern your family."'
-  - '"Arrive before midnight."'
-  - '"Once the gates close, they will not open again until the debt has been settled."'
-  - '"We await your arrival."'
-  - '"Sender: The House of Nocturnal."'
+  - '"If these words have reached you...
+
+    then I have little time left."'
+  - '"Your family has guarded a truth for generations.
+
+    It was never meant to
+    become your burden."'
+  - '"Yet fate has chosen otherwise."'
+  - Come to the House of Nocturnal."
+  - '"Trust no voice within these walls.
+
+    Follow only the fragments I have left
+    behind."'
+  - '"I will be waiting..."'
   - ...My family?
   - I've never heard of a place called Nocturnal...
-  - If this is someone's idea of a joke... they went through a lot of trouble.
+  - ...I have to know why she called me.
   - ...There's only one way to find out.
+  voices:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 8300000, guid: 95406333caa25474aae5a36b7c1e2dcb, type: 3}

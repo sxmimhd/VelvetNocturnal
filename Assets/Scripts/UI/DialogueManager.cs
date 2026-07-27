@@ -18,6 +18,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private Image portraitImage;
     [SerializeField] private TMP_Text speakerNameText;
     [SerializeField] private TMP_Text dialogueText;
+    [SerializeField] private AudioSource voiceSource;
 
     private readonly Queue<string> dialogueLines = new();
 
@@ -50,6 +51,7 @@ public class DialogueManager : MonoBehaviour
         foreach (string line in dialogue.lines)
             dialogueLines.Enqueue(line);
 
+        currentLineIndex = 0;
         DisplayNextLine();
     }
 
@@ -62,6 +64,16 @@ public class DialogueManager : MonoBehaviour
         }
 
         dialogueText.text = dialogueLines.Dequeue();
+
+        if (currentDialogue.voices != null &&
+            currentLineIndex < currentDialogue.voices.Length &&
+            currentDialogue.voices[currentLineIndex] != null)
+        {
+            voiceSource.Stop();
+            voiceSource.PlayOneShot(currentDialogue.voices[currentLineIndex]);
+        }
+
+        currentLineIndex++;
     }
 
     private void EndDialogue()
@@ -71,7 +83,7 @@ public class DialogueManager : MonoBehaviour
         dialoguePanel.SetActive(false);
 
         currentDialogue = null;
-
+        voiceSource.Stop();
         // Notify whoever is waiting.
         OnDialogueFinished?.Invoke();
     }
@@ -84,4 +96,5 @@ public class DialogueManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
             DisplayNextLine();
     }
+    private int currentLineIndex;
 }

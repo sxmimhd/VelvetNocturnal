@@ -11,4 +11,5 @@ public class Dialogue : ScriptableObject
     [Header("Dialogue")]
     [TextArea(3, 5)]
     public string[] lines;
+    public AudioClip[] voices;
 }
