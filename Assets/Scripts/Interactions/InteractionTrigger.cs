@@ -18,7 +18,7 @@ public class InteractionTrigger : MonoBehaviour
 
     [Header("Pickup")]
     [SerializeField] private bool usePickup;
-    [SerializeField] private string itemID;
+    [SerializeField] private InventoryItem item;
 
     [Header("Scene Transition")]
     [SerializeField] private bool useSceneTransition;
@@ -71,9 +71,8 @@ public class InteractionTrigger : MonoBehaviour
     
         if (usePickup)
         {
-            Debug.Log("Picked up: " + itemID);
-
-            
+            InventoryManager.Instance.AddItem(item);
+            Destroy(gameObject);
         }
 
         if (useSceneTransition)

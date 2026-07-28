@@ -36,10 +36,4 @@ MonoBehaviour:
   - I've never heard of a place called Nocturnal...
   - ...I have to know why she called me.
   - ...There's only one way to find out.
-  voices:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 8300000, guid: 95406333caa25474aae5a36b7c1e2dcb, type: 3}
+  voices: []

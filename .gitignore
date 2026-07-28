@@ -11,6 +11,10 @@
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
 Scenes/
+sprites/
+audio/
+items/
+Dialogues/
 .utmp/
 /[Ll]ibrary/
 /[Tt]emp/

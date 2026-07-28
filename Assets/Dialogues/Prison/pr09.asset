@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: pr09
   m_EditorClassIdentifier: Assembly-CSharp::Dialogue
   speakerName: ???
-  portrait: {fileID: 7185317630613513598, guid: 96238507d71146746ba5173b9e544c97, type: 3}
+  portrait: {fileID: 485459525109255948, guid: ec7b7138add3f3c4da78baec1f7d0ff0, type: 3}
   lines:
   - The Keepers.
+  voices: []
