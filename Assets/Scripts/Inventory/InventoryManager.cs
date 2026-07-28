@@ -26,4 +26,8 @@ public class InventoryManager : MonoBehaviour
 
         InventoryUI.Instance.Refresh();
     }
+    public bool HasItem(InventoryItem item)
+    {
+        return items.Contains(item);
+    }
 }

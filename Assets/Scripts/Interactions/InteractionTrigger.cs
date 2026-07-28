@@ -25,6 +25,11 @@ public class InteractionTrigger : MonoBehaviour
     [SerializeField] private string sceneName;
     [SerializeField] private string spawnID;
     [SerializeField] private float fadeDuration = 1f;
+    [Header("Scene Requirements")]
+    [SerializeField] private bool requireItem;
+    [SerializeField] private InventoryItem requiredItem;
+    [SerializeField] private bool useMissingItemDialogue;
+    [SerializeField] private Dialogue missingItemDialogue;
 
     public bool AutoInteract => autoInteract;
 
@@ -77,14 +82,42 @@ public class InteractionTrigger : MonoBehaviour
 
         if (useSceneTransition)
         {
+            if (requireItem && !InventoryManager.Instance.HasItem(requiredItem))
+            {
+                if (useMissingItemDialogue && missingItemDialogue != null)
+                {
+                    bool finished = false;
+
+                    void DialogueFinished()
+                    {
+                        finished = true;
+                    }
+
+                    DialogueManager.Instance.OnDialogueFinished += DialogueFinished;
+
+                    DialogueManager.Instance.StartDialogue(missingItemDialogue);
+
+                    yield return new WaitUntil(() => finished);
+
+                    DialogueManager.Instance.OnDialogueFinished -= DialogueFinished;
+                }
+
+                isInteracting = false;
+
+                if (!oneTimeOnly)
+                    ShowPrompt();
+
+                yield break;
+            }
+
             SceneTransitionManager.Instance.LoadScene(
                 sceneName,
                 spawnID,
                 fadeDuration);
         }
+
         isInteracting = false;
         
-
         if (!oneTimeOnly)
             ShowPrompt();
     }
