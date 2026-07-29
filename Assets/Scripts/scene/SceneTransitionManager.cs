@@ -55,6 +55,8 @@ public class SceneTransitionManager : MonoBehaviour
 
         UpdateCameraBounds();
 
+        SpawnEnemy();
+
         sceneLoaded = true;
     }
     [SerializeField] private float companionOffset = 1.2f;
@@ -103,5 +105,37 @@ public class SceneTransitionManager : MonoBehaviour
 
         confiner.BoundingShape2D = bounds.GetComponent<Collider2D>();
         confiner.InvalidateBoundingShapeCache();
+    }
+
+    private void SpawnEnemy()
+    {
+        if (EnemyManager.Instance == null)
+            return;
+
+        if (!EnemyManager.Instance.Activated)
+            return;
+
+        EnemyManager.Instance.Enemy.gameObject.SetActive(
+            EnemyManager.Instance.IsEnemyInCurrentScene());
+
+        if (!EnemyManager.Instance.IsEnemyInCurrentScene())
+            return;
+
+        SceneSpawn[] spawns = FindObjectsByType<SceneSpawn>();
+
+        foreach (SceneSpawn spawn in spawns)
+        {
+            if (spawn.SpawnID != EnemyManager.Instance.CurrentSpawnID)
+                continue;
+
+            EnemyManager.Instance.SpawnEnemy(spawn.transform.position);
+
+            EnemyManager.Instance.Enemy.ResetPatrol();
+
+            return;
+        }
+
+        Debug.LogWarning(
+            $"Enemy spawn '{EnemyManager.Instance.CurrentSpawnID}' not found.");
     }
 }

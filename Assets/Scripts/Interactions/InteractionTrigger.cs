@@ -128,7 +128,7 @@ public class InteractionTrigger : MonoBehaviour
 
                 yield break;
             }
-
+            
             SceneTransitionManager.Instance.LoadScene(
                 sceneName,
                 spawnID,
