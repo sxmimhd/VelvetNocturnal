@@ -7,8 +7,8 @@ public class InteractionTrigger : MonoBehaviour
     [SerializeField] private string promptText = "Interact";
     [SerializeField] private bool autoInteract;
     [SerializeField] private bool oneTimeOnly;
+    [SerializeField] private string interactionID;
 
-    private bool hasInteracted;
     private bool isInteracting;
     public bool IsInteracting => isInteracting;
 
@@ -30,11 +30,25 @@ public class InteractionTrigger : MonoBehaviour
     [SerializeField] private InventoryItem requiredItem;
     [SerializeField] private bool useMissingItemDialogue;
     [SerializeField] private Dialogue missingItemDialogue;
-
+    private bool hasInteracted;
     public bool AutoInteract => autoInteract;
-
+    private void Start()
+    {
+        if (oneTimeOnly &&
+            !string.IsNullOrEmpty(interactionID) &&
+            InteractionManager.Instance.IsCompleted(interactionID))
+        {
+            gameObject.SetActive(false);
+        }
+    }
     public void Interact()
     {
+        if (oneTimeOnly &&
+            !string.IsNullOrEmpty(interactionID) &&
+            InteractionManager.Instance.IsCompleted(interactionID))
+        {
+            return;
+        }
         if (isInteracting)
             return;
 
@@ -42,6 +56,7 @@ public class InteractionTrigger : MonoBehaviour
             return;
 
         hasInteracted = true;
+
         isInteracting = true;
 
         HidePrompt();
@@ -77,6 +92,10 @@ public class InteractionTrigger : MonoBehaviour
         if (usePickup)
         {
             InventoryManager.Instance.AddItem(item);
+
+            if (oneTimeOnly && !string.IsNullOrEmpty(interactionID))
+                InteractionManager.Instance.Complete(interactionID);
+
             Destroy(gameObject);
         }
 
@@ -101,7 +120,7 @@ public class InteractionTrigger : MonoBehaviour
 
                     DialogueManager.Instance.OnDialogueFinished -= DialogueFinished;
                 }
-
+                hasInteracted = false;
                 isInteracting = false;
 
                 if (!oneTimeOnly)
@@ -114,6 +133,12 @@ public class InteractionTrigger : MonoBehaviour
                 sceneName,
                 spawnID,
                 fadeDuration);
+        }
+        if (!usePickup &&
+            oneTimeOnly &&
+            !string.IsNullOrEmpty(interactionID))
+        {
+            InteractionManager.Instance.Complete(interactionID);
         }
 
         isInteracting = false;

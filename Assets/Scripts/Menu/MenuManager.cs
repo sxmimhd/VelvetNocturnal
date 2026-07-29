@@ -5,7 +5,7 @@ public class MenuManager : MonoBehaviour
 {
     public void PlayGame()
     {
-        SceneManager.LoadScene("exterior");
+        SceneManager.LoadScene("cemetery");
     }
 
     public void QuitGame()
