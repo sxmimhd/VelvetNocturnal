@@ -24,6 +24,7 @@ public class InteractionTrigger : MonoBehaviour
     [SerializeField] private bool useSceneTransition;
     [SerializeField] private string sceneName;
     [SerializeField] private string spawnID;
+    [SerializeField] private bool enemyCanUse = true;
     [SerializeField] private float fadeDuration = 1f;
     [Header("Scene Requirements")]
     [SerializeField] private bool requireItem;
@@ -128,11 +129,25 @@ public class InteractionTrigger : MonoBehaviour
 
                 yield break;
             }
-            
+            if (EnemyManager.Instance != null &&
+                EnemyManager.Instance.State == EnemyManager.EnemyState.Chase)
+            {
+                if (enemyCanUse)
+                {
+                    EnemyDoor door = GetComponent<EnemyDoor>();
+
+                    if (door != null)
+                        EnemyManager.Instance.SetChaseDoor(door);
+                }
+                else
+                {
+                    EnemyManager.Instance.StopChase();
+                }
+            }
             SceneTransitionManager.Instance.LoadScene(
-                sceneName,
-                spawnID,
-                fadeDuration);
+            sceneName,
+            spawnID,
+            fadeDuration);
         }
         if (!usePickup &&
             oneTimeOnly &&

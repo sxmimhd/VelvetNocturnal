@@ -29,4 +29,9 @@ public class EnemyRoom : MonoBehaviour
 
         return doors[Random.Range(0, doors.Count)];
     }
+    private void OnDestroy()
+    {
+        if (Current == this)
+            Current = null;
+    }
 }

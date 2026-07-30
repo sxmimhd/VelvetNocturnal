@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager Instance;
-    
     public enum EnemyState
     {
         Sleeping,
@@ -12,25 +11,23 @@ public class EnemyManager : MonoBehaviour
         Patrol,
         Chase
     }
-
     [SerializeField] private EnemyAI enemy;
-
+    public int NextPatrolIndex { get; private set; }
     public EnemyAI Enemy => enemy;
-
     public EnemyState State { get; private set; } = EnemyState.Sleeping;
-
     public bool Activated => State != EnemyState.Sleeping;
-
     public string CurrentScene { get; private set; }
-
     public string CurrentSpawnID { get; private set; }
-
+    [SerializeField] private float roomTravelTime = 12f;
+    private float travelTimer;
+    public string ChaseScene { get; private set; }
+    public string ChaseSpawnID { get; private set; }
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            
         }
         else
         {
@@ -39,7 +36,14 @@ public class EnemyManager : MonoBehaviour
 
         enemy.gameObject.SetActive(false);
     }
+    
 
+    private void Update()
+    {
+        if (travelTimer > 0f)
+            travelTimer -= Time.deltaTime;
+        
+    }
     public void Activate(string sceneName, string spawnID)
     {
         if (Activated)
@@ -83,6 +87,7 @@ public class EnemyManager : MonoBehaviour
 
     public void StopChase()
     {
+        
         State = EnemyState.Patrol;
     }
 
@@ -90,6 +95,15 @@ public class EnemyManager : MonoBehaviour
     {
         CurrentScene = sceneName;
         CurrentSpawnID = spawnID;
+
+        if (EnemyRoom.Current != null &&
+            EnemyRoom.Current.PatrolPoints.Count > 0)
+        {
+            NextPatrolIndex =
+                Random.Range(0, EnemyRoom.Current.PatrolPoints.Count);
+        }
+
+        travelTimer = roomTravelTime;
     }
 
     public bool IsEnemyInCurrentScene()
@@ -110,5 +124,19 @@ public class EnemyManager : MonoBehaviour
     {
         enemy.transform.position = position;
     }
+    public bool CanSpawnInCurrentScene()
+    {
+        return Activated &&
+            CurrentScene == SceneManager.GetActiveScene().name &&
+            travelTimer <= 0f;
+    }
+    public void SetChaseDoor(EnemyDoor door)
+    {
+        if (door == null)
+            return;
 
+        ChaseScene = door.TargetScene;
+        ChaseSpawnID = door.TargetSpawnID;
+    }
+    
 }

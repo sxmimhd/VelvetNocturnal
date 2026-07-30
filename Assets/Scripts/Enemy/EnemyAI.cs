@@ -49,7 +49,7 @@ public class EnemyAI : MonoBehaviour
 
         if (EnemyRoom.Current.PatrolPoints.Count == 0)
             return;
-
+        
         Transform point =
             EnemyRoom.Current.PatrolPoints[patrolIndex].transform;
 
@@ -74,15 +74,36 @@ public class EnemyAI : MonoBehaviour
 
     void Chase()
     {
-        if (playerTarget == null)
+        // Player still in this scene
+        if (playerTarget != null)
+        {
+            Vector2 direction =
+                ((Vector2)playerTarget.position - rb.position).normalized;
+
+            rb.MovePosition(
+                rb.position +
+                direction * moveSpeed * Time.fixedDeltaTime);
+
             return;
+        }
 
-        Vector2 direction =
-            ((Vector2)playerTarget.position - rb.position).normalized;
+        // Player changed scene
+        if (!walkingToDoor)
+        {
+            EnemyDoor[] doors = FindObjectsByType<EnemyDoor>();
 
-        rb.MovePosition(
-            rb.position +
-            direction * moveSpeed * Time.fixedDeltaTime);
+            foreach (EnemyDoor door in doors)
+            {
+                if (door.TargetScene == EnemyManager.Instance.ChaseScene &&
+                    door.TargetSpawnID == EnemyManager.Instance.ChaseSpawnID)
+                {
+                    GoToDoor(door);
+                    return;
+                }
+            }
+
+            EnemyManager.Instance.StopChase();
+        }
     }
 
     public void SetPlayerTarget(Transform player)
@@ -121,9 +142,9 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    public void ResetPatrol()
+    public void SetPatrolIndex(int index)
     {
-        patrolIndex = 0;
+        patrolIndex = index;
     }
     public void GoToDoor(EnemyDoor door)
     {
@@ -132,6 +153,11 @@ public class EnemyAI : MonoBehaviour
     }
     private void WalkToDoor()
     {
+        if (destinationDoor == null)
+        {
+            walkingToDoor = false;
+            return;
+        }
         rb.MovePosition(
             Vector2.MoveTowards(
                 rb.position,
@@ -145,7 +171,7 @@ public class EnemyAI : MonoBehaviour
             EnemyManager.Instance.TravelTo(
                 destinationDoor.TargetScene,
                 destinationDoor.TargetSpawnID);
-
+            EnemyManager.Instance.SetChaseDoor(null);
             gameObject.SetActive(false);
 
             walkingToDoor = false;

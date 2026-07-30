@@ -115,12 +115,11 @@ public class SceneTransitionManager : MonoBehaviour
         if (!EnemyManager.Instance.Activated)
             return;
 
-        EnemyManager.Instance.Enemy.gameObject.SetActive(
-            EnemyManager.Instance.IsEnemyInCurrentScene());
 
-        if (!EnemyManager.Instance.IsEnemyInCurrentScene())
+        if (!EnemyManager.Instance.CanSpawnInCurrentScene())
             return;
-
+        if (EnemyRoom.Current == null)
+            return;
         SceneSpawn[] spawns = FindObjectsByType<SceneSpawn>();
 
         foreach (SceneSpawn spawn in spawns)
@@ -128,14 +127,31 @@ public class SceneTransitionManager : MonoBehaviour
             if (spawn.SpawnID != EnemyManager.Instance.CurrentSpawnID)
                 continue;
 
-            EnemyManager.Instance.SpawnEnemy(spawn.transform.position);
+            // Chasing across scenes
+            if (EnemyManager.Instance.State == EnemyManager.EnemyState.Chase)
+            {
+                EnemyManager.Instance.SpawnEnemy(
+                    spawn.transform.position);
 
-            EnemyManager.Instance.Enemy.ResetPatrol();
+                EnemyManager.Instance.Enemy.SetPlayerTarget(
+                    CharacterManager.Instance.CurrentCharacter.transform);
+            }
+            // Normal patrol travel
+            else
+            {
+                EnemyManager.Instance.SpawnEnemy(
+                    EnemyRoom.Current.PatrolPoints[
+                        EnemyManager.Instance.NextPatrolIndex
+                    ].transform.position);
+
+                EnemyManager.Instance.Enemy.SetPatrolIndex(
+                    EnemyManager.Instance.NextPatrolIndex);
+            }
+
+            EnemyManager.Instance.Enemy.gameObject.SetActive(true);
 
             return;
         }
-
-        Debug.LogWarning(
-            $"Enemy spawn '{EnemyManager.Instance.CurrentSpawnID}' not found.");
     }
+
 }
