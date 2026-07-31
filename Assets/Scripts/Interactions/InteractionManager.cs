@@ -29,4 +29,15 @@ public class InteractionManager : MonoBehaviour
     {
         completed.Add(id);
     }
+    public List<string> GetCompleted()
+    {
+        return new List<string>(completed);
+    }
+    public void Restore(List<string> ids)
+    {
+        completed.Clear();
+
+        foreach (string id in ids)
+            completed.Add(id);
+    }
 }

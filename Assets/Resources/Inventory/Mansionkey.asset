@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2143c9850efe98541a88ed6c928e7447, type: 3}
+  m_Name: Mansionkey
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryItem
+  itemName: Mansion Key
+  description: A golden key set with a crimson jewel. It opens most doors and the
+    passages leading into the upper halls of the Nocturnal Mansion.
+  icon: {fileID: 9206198424269120703, guid: bfbe422ee1cf4824e8344a8c848dc764, type: 3}
+  largeImage: {fileID: 9206198424269120703, guid: bfbe422ee1cf4824e8344a8c848dc764, type: 3}

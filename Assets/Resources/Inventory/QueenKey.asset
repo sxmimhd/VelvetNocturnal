@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2143c9850efe98541a88ed6c928e7447, type: 3}
+  m_Name: QueenKey
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryItem
+  itemName: Queen Key
+  description: An elegant iron key with a crown-shaped head. Its intricate design
+    marks it as one of the mansion's most important keys, granting access to the
+    ruler's Chamber, the dinning room and the mansion main door.
+  icon: {fileID: 8518449043859006276, guid: 70cd283b77e4bc84b85aa4347ec737e3, type: 3}
+  largeImage: {fileID: 8518449043859006276, guid: 70cd283b77e4bc84b85aa4347ec737e3, type: 3}

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2143c9850efe98541a88ed6c928e7447, type: 3}
+  m_Name: Prisonkey
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryItem
+  itemName: Prison Key
+  description: A worn iron key used throughout the underground prison. It unlocks
+    most standard cell and corridor doors.
+  icon: {fileID: 8391695129825486572, guid: e035ee7a123bbfd4ebc83bdddadc9e2e, type: 3}
+  largeImage: {fileID: 8391695129825486572, guid: e035ee7a123bbfd4ebc83bdddadc9e2e, type: 3}

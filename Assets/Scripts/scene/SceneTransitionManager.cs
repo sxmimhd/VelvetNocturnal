@@ -9,6 +9,7 @@ public class SceneTransitionManager : MonoBehaviour
     private bool sceneLoaded;
     private float currentFadeDuration;
     private string nextSpawnID;
+    public string CurrentSpawnID => nextSpawnID;
 
     private void Awake()
     {

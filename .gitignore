@@ -10,8 +10,11 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
+
 Scenes/
 sprites/
+sprites/ENV
+sprites/items
 audio/
 items/
 Dialogues/

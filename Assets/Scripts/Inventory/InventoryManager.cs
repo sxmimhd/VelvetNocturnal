@@ -30,4 +30,28 @@ public class InventoryManager : MonoBehaviour
     {
         return items.Contains(item);
     }
+    public List<string> GetItemIDs()
+    {
+        List<string> ids = new();
+
+        foreach (InventoryItem item in items)
+            ids.Add(item.name);
+
+        return ids;
+    }
+    public void Restore(List<string> ids)
+    {
+        items.Clear();
+
+        foreach (string id in ids)
+        {
+            InventoryItem item =
+                Resources.Load<InventoryItem>("Inventory/" + id);
+
+            if (item != null)
+                items.Add(item);
+        }
+
+        InventoryUI.Instance.Refresh();
+    }
 }

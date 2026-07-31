@@ -10,6 +10,8 @@ public class InteractionTrigger : MonoBehaviour
     [SerializeField] private string interactionID;
 
     private bool isInteracting;
+    [SerializeField] private float interactionCooldown = 1f;
+    private bool onCooldown;
     public bool IsInteracting => isInteracting;
 
     [Header("Dialogue")]
@@ -50,6 +52,8 @@ public class InteractionTrigger : MonoBehaviour
         {
             return;
         }
+        if (onCooldown)
+            return;
         if (isInteracting)
             return;
 
@@ -149,6 +153,14 @@ public class InteractionTrigger : MonoBehaviour
             spawnID,
             fadeDuration);
         }
+
+        SaveCrystal crystal = GetComponent<SaveCrystal>();
+
+        if (crystal != null)
+        {
+            crystal.SaveGame();
+        }
+
         if (!usePickup &&
             oneTimeOnly &&
             !string.IsNullOrEmpty(interactionID))
@@ -157,11 +169,19 @@ public class InteractionTrigger : MonoBehaviour
         }
 
         isInteracting = false;
+        StartCoroutine(CooldownRoutine());
         
         if (!oneTimeOnly)
             ShowPrompt();
     }
+    private IEnumerator CooldownRoutine()
+    {
+        onCooldown = true;
 
+        yield return new WaitForSeconds(interactionCooldown);
+
+        onCooldown = false;
+    }
     public void ShowPrompt()
     {
         if (autoInteract)

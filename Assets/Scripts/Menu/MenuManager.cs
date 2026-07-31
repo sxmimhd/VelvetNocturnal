@@ -1,11 +1,16 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-    public void PlayGame()
+    public void NewGame()
     {
-        SceneManager.LoadScene("cemetery");
+        SaveManager.Instance.NewGame();
+    }
+
+    public void ContinueGame()
+    {
+        if (SaveManager.Instance.SaveExists())
+            SaveManager.Instance.LoadGame();
     }
 
     public void QuitGame()
