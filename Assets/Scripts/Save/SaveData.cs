@@ -17,4 +17,10 @@ public class SaveData
     // Metadata
     public string SaveDate;
     public float PlayTime;
+    public bool CarlosUnlocked;
+
+    public bool EnemyActivated;
+    public string EnemyScene;
+    public string EnemySpawnID;
+    public EnemyManager.EnemyState EnemyState;
 }

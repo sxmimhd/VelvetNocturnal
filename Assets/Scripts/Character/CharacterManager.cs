@@ -13,6 +13,7 @@ public class CharacterManager : MonoBehaviour
     public PlayerMovement CurrentCharacter { get; private set; }
     public PlayerMovement Lumy => lumy;
     public PlayerMovement Carlos => carlos;
+    
 
     private void Awake()
     {

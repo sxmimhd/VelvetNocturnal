@@ -61,15 +61,21 @@ public class SaveManager : MonoBehaviour
 
         data.SceneName = scene;
         data.SpawnID = spawnID;
-
+        data.CarlosUnlocked =
+            CharacterManager.Instance.Carlos.gameObject.activeSelf;
         data.InventoryItems =
             InventoryManager.Instance.GetItemIDs();
 
         data.CompletedInteractions =
             InteractionManager.Instance.GetCompleted();
+        data.EnemyActivated = EnemyManager.Instance.Activated;
+        data.EnemyScene = EnemyManager.Instance.CurrentScene;
+        data.EnemySpawnID = EnemyManager.Instance.CurrentSpawnID;
+        data.EnemyState = EnemyManager.Instance.State;
 
         data.SaveDate =
             System.DateTime.Now.ToString("dd/MM/yyyy HH:mm");
+        
 
         Save(data);
     }
@@ -79,18 +85,27 @@ public class SaveManager : MonoBehaviour
 
         if (data == null)
             return;
-
+        if (data.CarlosUnlocked)
+            CharacterManager.Instance.UnlockCarlos();
         InventoryManager.Instance.Restore(
             data.InventoryItems);
 
         InteractionManager.Instance.Restore(
             data.CompletedInteractions);
+        if (data.EnemyActivated)
+        {
+            EnemyManager.Instance.Activate(
+                data.EnemyScene,
+                data.EnemySpawnID);
 
+            EnemyManager.Instance.SetState(data.EnemyState);
+        }
         SceneTransitionManager.Instance.LoadScene(
             data.SceneName,
             data.SpawnID,
             1f);
     }
+    
     public void NewGame()
     {
         Delete();

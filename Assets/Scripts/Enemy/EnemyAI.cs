@@ -105,6 +105,7 @@ public class EnemyAI : MonoBehaviour
                 }
             }
 
+            playerTarget = null;
             EnemyManager.Instance.StopChase();
         }
     }
@@ -134,6 +135,8 @@ public class EnemyAI : MonoBehaviour
         if (!other.GetComponent<PlayerMovement>())
             return;
 
+        playerTarget = null;
+
         EnemyManager.Instance.StopChase();
     }
 
@@ -142,6 +145,7 @@ public class EnemyAI : MonoBehaviour
         if (collision.collider.GetComponent<PlayerMovement>())
         {
             Debug.Log("GAME OVER");
+            GameOverManager.Instance.TriggerGameOver();
         }
     }
 

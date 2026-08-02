@@ -138,5 +138,8 @@ public class EnemyManager : MonoBehaviour
         ChaseScene = door.TargetScene;
         ChaseSpawnID = door.TargetSpawnID;
     }
-    
+    public void SetState(EnemyState state)
+    {
+        State = state;
+    }
 }

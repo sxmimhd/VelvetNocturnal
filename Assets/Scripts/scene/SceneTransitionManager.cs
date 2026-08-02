@@ -115,12 +115,21 @@ public class SceneTransitionManager : MonoBehaviour
 
         if (!EnemyManager.Instance.Activated)
             return;
-
-
         if (!EnemyManager.Instance.CanSpawnInCurrentScene())
+        {
+            EnemyManager.Instance.Enemy.gameObject.SetActive(false);
             return;
+        }
         if (EnemyRoom.Current == null)
+        {
+            EnemyManager.Instance.Enemy.gameObject.SetActive(false);
             return;
+        }
+        if (!EnemyManager.Instance.IsEnemyInCurrentScene())
+        {
+            EnemyManager.Instance.Enemy.gameObject.SetActive(false);
+            return;
+        }
         SceneSpawn[] spawns = FindObjectsByType<SceneSpawn>();
 
         foreach (SceneSpawn spawn in spawns)
