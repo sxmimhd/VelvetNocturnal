@@ -21,6 +21,9 @@ public class EnemyAI : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (DialogueManager.Instance != null &&
+            DialogueManager.Instance.IsDialogueActive)
+            return;
         if (walkingToDoor)
         {
             WalkToDoor();
