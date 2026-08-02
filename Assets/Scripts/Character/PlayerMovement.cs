@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        
 
         rb = GetComponent<Rigidbody2D>();
     }

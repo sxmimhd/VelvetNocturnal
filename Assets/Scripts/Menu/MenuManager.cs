@@ -3,7 +3,7 @@ using UnityEngine;
 public class MenuManager : MonoBehaviour
 {
     public void NewGame()
-    {
+    {  
         SaveManager.Instance.NewGame();
     }
 

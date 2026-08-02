@@ -16,4 +16,5 @@ public class GameRoot : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    
 }

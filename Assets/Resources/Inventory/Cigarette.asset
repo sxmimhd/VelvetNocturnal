@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2143c9850efe98541a88ed6c928e7447, type: 3}
   m_Name: Cigarette
   m_EditorClassIdentifier: Assembly-CSharp::InventoryItem
-  itemName: Cigarette
-  description: 'carlos''s pack of cig '
+  itemName: Cigarettes
+  description: A worn pack of cigarettes belonging to Carlos. A small comfort that
+    somehow survived the mansion's decay.
   icon: {fileID: 8220640618769314339, guid: cffe0418195bca84892e9e3e4ad9189c, type: 3}
   largeImage: {fileID: 8220640618769314339, guid: cffe0418195bca84892e9e3e4ad9189c, type: 3}
