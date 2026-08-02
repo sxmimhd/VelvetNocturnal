@@ -21,7 +21,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private AudioSource voiceSource;
 
     private readonly Queue<string> dialogueLines = new();
-
+    
     private Dialogue currentDialogue;
     private bool isDialogueActive;
 
